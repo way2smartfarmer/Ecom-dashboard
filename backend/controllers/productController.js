@@ -18,7 +18,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 //Get all products
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const resultPerPage = 5;
-  const productCount =await Product.countDocuments();
+  const productCount = await Product.countDocuments();
   const Apifeatres = new Apifeatres(Product.find(), req.query)
     .search()
     .filter()
@@ -42,7 +42,7 @@ exports.getProductDetals = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     product,
-    productCount
+    productCount,
   });
 });
 
@@ -86,5 +86,98 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Product Delete Succesfullly",
+  });
+});
+
+//Create New Review  or Update a review
+exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
+  const { rating, comment, productId } = req.body;
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+
+  const product = await Product.findById(productId);
+
+  const isReviewed = product.reviews.find(
+    (rev) => rev.user.toStringify() === req.user._id.toStringify()
+  );
+
+  if (isReviewed) {
+    product.reviews.forEach((rev) => {
+      if (rev.user.toStringify() === req.user._id.toStringify())
+        (rev.rating = rating), (rev.comment = comment);
+    });
+  } else {
+    product.reviews.push(review);
+    product.numOfReviews = product.reviews.length;
+  }
+
+  //4,5,5,2 =16/4 (avg)
+  let avg = 0;
+  product.reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+
+  product.ratings = avg / product.reviews.length;
+
+  await product.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+//Get all reviews of a product
+exports.getProductreviews = catchAsyncErrors(async (req, res, nect) => {
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not Fund", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    reviews: product.reviews,
+  });
+});
+
+//Delete Review
+//Get all reviews of a product
+exports.deleteReview = catchAsyncErrors(async (req, res, nect) => {
+  const product = await Product.findById(req.params.productId);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not Fund", 404));
+  }
+
+  const reviews = product.reviews.filter(
+    (rev) => rev._id.toStringify() !== req.query.id.toStringify()
+  );
+
+  let avg = 0;
+  reviews.forEach((rev) => {
+    avg += rev.rating;
+  });
+  const ratings = avg / reviews.length;
+
+  const numOfReviews = reviews.length;
+
+  await Product.findByIdAndUpdate(
+    req.query.productId,
+    { reviews, ratings, numOfReviews },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    reviews: product.reviews,
   });
 });

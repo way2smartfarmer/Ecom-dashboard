@@ -20,6 +20,10 @@ const productSchema = new mongoose.Schema({
     required: [true, "Please Enter cutted Price"],
     maxLength: [8, "Price cannot exceed 8 charcters"],
   },
+  ratings:{
+    type: Number,
+    default: 0,
+  },
   category: {
     type: String,
     required: [true, "Please Enter Product Category"],
@@ -30,6 +34,29 @@ const productSchema = new mongoose.Schema({
     maxLength: [4, "Stoc cannot exceed 4 character"],
     default: 1,
   },
+  numOfReviews: {
+    type: Number,
+    default: 0,
+  },
+  reviews: [{
+      user:{
+       type: mongoose.Schema.ObjectId,
+       ref: "User",
+       required: true
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      rating:{
+        type: Number,
+        required: true,
+      },
+      comment:{
+        type: String,
+        required: true,
+      }
+  }],
   warranty: {
     type: Number,
     required: [true, "Please enter the Product warranty"],
