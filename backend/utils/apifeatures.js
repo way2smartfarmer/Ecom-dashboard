@@ -1,4 +1,4 @@
-class Apifeatres {
+class Apifeatures {
     constructor(query,queryStr){
         this.query = query;
         this.queryStr =queryStr;
@@ -19,7 +19,7 @@ class Apifeatres {
         const queryCopy = {...this.queryStr}
 
         //Removing some fields for category
-        const removeFields = ["keyword","page","lmit"];
+        const removeFields = ["keyword","page","limit"];
 
         removeFields.forEach(key=>delete queryCopy[key]);
         //Filter for Price and Rating
@@ -40,4 +40,4 @@ class Apifeatres {
     }
 }
 
-module.exports = Apifeatres;
+module.exports = Apifeatures;
