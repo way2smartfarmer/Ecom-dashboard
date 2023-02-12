@@ -23,13 +23,18 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const Apifeatures = new Apifeatures(Product.find(), req.query)
     .search()
     .filter()
-    .pagination(resultPerPage);
-  const products = await this.query;
+
+    let products = await Apifeatures.query;
+    let filteredProductsCount = products.length;
+    Apifeatures.pagination(resultPerPage);
+ products = await this.query;
 
   res.status(200).json({
     success: true,
     products,
-    productsCount
+    productsCount,
+    resultPerPage,
+    filteredProductsCount,
   });
 });
 

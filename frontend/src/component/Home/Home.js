@@ -11,14 +11,14 @@ import ProductDetails from '../Product/ProductDetails';
 
 const product = {
     name:"Product 1",
-    images: [{url:"https://i.ibb.co/DRST11n/1.webp"}],
+    images: [{url:"https://e7.pngegg.com/pngimages/233/436/png-clipart-logo-agriculture-computer-icons-agriculture-miscellaneous-leaf-thumbnail.png"}],
     price: "$300",
     _id:"akash"
 }
 const Home = () => {
   const alert = useAlert();
   const dispatch  = useDispatch();
-  const {loading,error,products,productsCount} = useSelector(
+  const {loading,error,products} = useSelector(
     (state) => state.products
   );
   useEffect(() => {
@@ -37,7 +37,7 @@ const Home = () => {
         <MetaData title="Ecommerce Page"/>
          <div className='banner'>
              <p>Welcome to Ecommerce</p>
-             <h1>Find Ammazing Product Below</h1>
+             <h1>Find Amazing Product Below</h1>
              <a href='#container'>
               <button>Scroll</button>
              </a>
