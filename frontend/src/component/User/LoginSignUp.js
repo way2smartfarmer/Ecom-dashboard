@@ -70,7 +70,7 @@ const LoginSignUp = ({ history, location }) => {
     }
   };
 
-//   const redirect = location.search ? location.search.split("=")[1] : "/account";
+  const redirect = location.search ? location.search.split("=")[1] : "/account";
 
   useEffect(() => {
     if (error) {
@@ -78,10 +78,10 @@ const LoginSignUp = ({ history, location }) => {
       dispatch(clearErrors());
     }
 
-    // if (isAuthenticated) {
-    //   history.push(redirect);
-    // }
-  }, [dispatch, error, alert, history, isAuthenticated, ]);
+    if (isAuthenticated) {
+      history.push(redirect);
+    }
+  }, [dispatch, error, alert, history, isAuthenticated, redirect]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {
