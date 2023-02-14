@@ -11,10 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { logout } from "../../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import Profile from '../../../images/Profile.png'
+import Profile from "../../../images/Profile.png";
 
 const UserOptions = ({ user }) => {
-   const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const [open, setOpen] = useState(false);
   const history = useNavigate();
@@ -36,13 +36,13 @@ const UserOptions = ({ user }) => {
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
 
-  // if (user.role === "admin") {
-  //   options.unshift({
-  //     icon: <DashboardIcon />,
-  //     name: "Dashboard",
-  //     func: dashboard,
-  //   });
-  // }
+  if (user.role === "admin") {
+    options.unshift({
+      icon: <DashboardIcon />,
+      name: "Dashboard",
+      func: dashboard,
+    });
+  }
 
   function dashboard() {
     history.push("/admin/dashboard");

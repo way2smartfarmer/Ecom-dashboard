@@ -52,10 +52,10 @@ const Products = ({ match }) => {
   let count = filteredProductsCount;
 
   useEffect(() => {
-    // if (error) {
-    //   alert.error(error);
-    //   dispatch(clearErrors());
-    // }
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
 
     dispatch(getProduct(keyword, currentPage, price, category, ratings));
   }, [dispatch, keyword, currentPage, price, category, ratings, alert, error]);

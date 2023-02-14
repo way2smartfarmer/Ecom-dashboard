@@ -76,18 +76,18 @@ const MyOrders = () => {
       });
     });
 
-//   useEffect(() => {
-//     // if (error) {
-//     //   alert.error(error);
-//     //   dispatch(clearErrors());
-//     // }
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
 
-//     dispatch(myOrders());
-//   }, [dispatch, alert, error]);
+    dispatch(myOrders());
+  }, [dispatch, alert, error]);
 
   return (
     <Fragment>
-      {/* <MetaData title={`${user.name} - Orders`} /> */}
+      <MetaData title={`${user.name} - Orders`} />
 
       {loading ? (
         <Loader />
@@ -102,7 +102,7 @@ const MyOrders = () => {
             autoHeight
           />
 
-          {/* <Typography id="myOrdersHeading">{user.name}'s Orders</Typography> */}
+          <Typography id="myOrdersHeading">{user.name}'s Orders</Typography>
         </div>
       )}
     </Fragment>

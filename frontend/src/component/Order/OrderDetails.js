@@ -14,14 +14,14 @@ const OrderDetails = ({ match }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
-//   useEffect(() => {
-//     if (error) {
-//       alert.error(error);
-//       dispatch(clearErrors());
-//     }
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
 
-//     dispatch(getOrderDetails(match.params.id));
-//   }, [dispatch, alert, error, match.params.id]);
+    dispatch(getOrderDetails(match.params.id));
+  }, [dispatch, alert, error, match.params.id]);
   return (
     <Fragment>
       {loading ? (
