@@ -42,13 +42,13 @@ import ProductReviews from "./component/Admin/ProductReviews";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
-  const [stripeApiKey, setStripeApiKey] = useState("");
+  // const [stripeApiKey, setStripeApiKey] = useState("");
 
-  async function getStripeApiKey() {
-    const { data } = await axios.get("/api/v1/stripeapikey");
+  // async function getStripeApiKey() {
+  //   const { data } = await axios.get("/api/v1/stripeapikey");
 
-    setStripeApiKey(data.stripeApiKey);
-  }
+  //   setStripeApiKey(data.stripeApiKey);
+  // }
 
   useEffect(() => {
     WebFont.load({
@@ -59,10 +59,16 @@ function App() {
     store.dispatch(loadUser());
     // getStripeApiKey();
   }, []);
+
   return (
     <Router>
       <Header />
       {isAuthenticated && <UserOptions user={user} />}
+      {/* {stripeApiKey && (
+        <Elements stripe={loadStripe(stripeApiKey)}>
+          <ProtectedRoute path="/process/payment" element={<Payment />} />
+        </Elements>
+      )} */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails />} />
@@ -75,12 +81,6 @@ function App() {
         <Route path="/password/reset/:token" element={<ResetPassword />} />
         <Route path="/cart" element={<Cart />} />
 
-        {stripeApiKey && (
-          <Elements stripe={loadStripe(stripeApiKey)}>
-            <ProtectedRoute path="/process/payment" element={<Payment />} />
-          </Elements>
-        )}
-
         <Route path="/orders/:id" element={<OrderDetails />} />
 
         {/* Add Routes to perticualar order/id and ortder/confim */}
@@ -92,7 +92,7 @@ function App() {
 
           <Route path="/password/update" element={<UpdatePassword />} />
           <Route path="/shipping" element={<Shipping />} />
-
+          <Route path="/success" element={<OrderSuccess />} />
           <Route path="/order/confirm" element={<ConfirmOrder />} />
           <Route path="/process/payment" element={<Payment />} />
 

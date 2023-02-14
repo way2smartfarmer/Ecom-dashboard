@@ -7,16 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 
-const product = {
-  name: "Product 1",
-  images: [
-    {
-      url: "https://e7.pngegg.com/pngimages/233/436/png-clipart-logo-agriculture-computer-icons-agriculture-miscellaneous-leaf-thumbnail.png",
-    },
-  ],
-  price: "$300",
-  _id: "akash",
-};
 const Home = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -27,7 +17,7 @@ const Home = () => {
       dispatch(clearErrors());
     }
 
-    dispatch(getProduct());
+    // dispatch(getProduct());
   }, [dispatch, alert, error]);
 
   return (
@@ -36,7 +26,7 @@ const Home = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="Ecommerce Page" />
+          <MetaData title="Ecommerce" />
           <div className="banner">
             <p>Welcome to Ecommerce</p>
             <h1>Find Amazing Product Below</h1>
@@ -47,7 +37,9 @@ const Home = () => {
           <h2 className="homeHeading">Featured Products</h2>
           <div className="container" id="container">
             {products &&
-              products.map((product) => <ProductCard product={product} />)}
+              products.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
           </div>
         </Fragment>
       )}
