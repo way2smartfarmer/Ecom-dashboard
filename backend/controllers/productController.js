@@ -37,7 +37,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 //Get all products
-exports.getAllProducts = catchAsyncErrors(async (req, res) => {
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const resultPerPage = 5;
   const productsCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find(), req.query)
@@ -212,7 +212,7 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
 
 //Delete Review
 //Get all reviews of a product
-exports.deleteReview = catchAsyncErrors(async (req, res, nect) => {
+exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.productId);
 
   if (!product) {
@@ -241,7 +241,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, nect) => {
 
   await Product.findByIdAndUpdate(
     req.query.productId,
-    { reviews, ratings, numOfReviews },
+    { reviews, rating, numOfReviews },
     {
       new: true,
       runValidators: true,
